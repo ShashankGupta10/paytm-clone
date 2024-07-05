@@ -4,6 +4,7 @@ import { Card } from '@repo/ui/card'
 import { Select } from '@repo/ui/select'
 import { useState } from 'react'
 import { TextInput } from '@repo/ui/input'
+import { onRampTxn } from '../lib/actions/onRampTxn'
 
 const SUPPORTED_BANKS = [
   {
@@ -14,9 +15,15 @@ const SUPPORTED_BANKS = [
     name: 'Axis Bank',
     redirectUrl: 'https://www.axisbank.com/',
   },
+  {
+    name: 'ICICI Bank',
+    redirectUrl: 'https://www.icicibank.com/',
+  },
 ]
 
 export const AddMoney = () => {
+  const [amount, setAmount] = useState<number>(0)
+  const [provider, setProvider] = useState<string>('')
   const [redirectUrl, setRedirectUrl] = useState(
     SUPPORTED_BANKS[0]?.redirectUrl
   )
@@ -26,11 +33,14 @@ export const AddMoney = () => {
         <TextInput
           label={'Amount'}
           placeholder={'Amount'}
-          onChange={() => {}}
+          onChange={(e) => {
+            setAmount(Number(e))
+          }}
         />
         <div className="py-4 text-left">Bank</div>
         <Select
           onSelect={(value) => {
+            setProvider(value)
             setRedirectUrl(
               SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ''
             )
@@ -42,8 +52,8 @@ export const AddMoney = () => {
         />
         <div className="flex justify-center pt-4">
           <Button
-            onClick={() => {
-              window.location.href = redirectUrl || ''
+            onClick={async () => {
+              await onRampTxn(amount, provider)
             }}
           >
             Add Money
