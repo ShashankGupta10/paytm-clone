@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { prisma } from '@repo/db/db'
 
 async function main() {
   const alice = await prisma.user.upsert({
@@ -12,10 +11,10 @@ async function main() {
       OnRampTransaction: {
         create: {
           startTime: new Date(),
-          status: "Success",
+          status: 'Success',
           amount: 20000,
-          token: "122",
-          provider: "HDFC Bank",
+          token: '122',
+          provider: 'HDFC Bank',
         },
       },
     },
@@ -30,10 +29,10 @@ async function main() {
       OnRampTransaction: {
         create: {
           startTime: new Date(),
-          status: "Failure",
+          status: 'Failure',
           amount: 2000,
-          token: "123",
-          provider: "HDFC Bank",
+          token: '123',
+          provider: 'HDFC Bank',
         },
       },
     },
