@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db/db'
 
 async function main() {
-  const alice = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { number: '9999999999' },
     update: {},
     create: {
@@ -19,7 +19,7 @@ async function main() {
       },
     },
   })
-  const bob = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { number: '9999999998' },
     update: {},
     create: {
@@ -37,7 +37,6 @@ async function main() {
       },
     },
   })
-  console.log({ alice, bob })
 }
 main()
   .then(async () => {

@@ -11,6 +11,7 @@ export const onRampTxn = async (amount: number, provider: string) => {
   const response = await axios.post('http://localhost:3005/api/initTxn', {
     amount: amount,
     provider: provider,
+    userId: session.user.id,
   })
   if (!response.data.success) {
     console.log('Invalid fields')
@@ -18,7 +19,7 @@ export const onRampTxn = async (amount: number, provider: string) => {
   }
   // extract query params from url
   const url = response.data.url
-  const token = url.split('?')[1].split('=')[1]
+  const token = url.split('/')[3]
   if (!token) throw new Error('Token not found in response')
 
   await prisma.onRampTransaction.create({
@@ -33,6 +34,26 @@ export const onRampTxn = async (amount: number, provider: string) => {
           id: Number(session?.user?.id),
         },
       } as any,
+    },
+  })
+
+  await prisma.balance.upsert({
+    where: {
+      userId: Number(session?.user?.id),
+    },
+    update: {
+      locked: {
+        increment: amount,
+      },
+    },
+    create: {
+      locked: amount,
+      amount: 0,
+      user: {
+        connect: {
+          id: Number(session?.user?.id),
+        },
+      },
     },
   })
 
