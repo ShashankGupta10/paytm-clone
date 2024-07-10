@@ -41,7 +41,7 @@ jobs:
           cd ../bank
             npm install
             echo "UPSTASH_REDIS_REST_URL=${{ secrets.BANK_APP_UPSTASH_REDIS_REST_URL }}" >> .env
-            echo "UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" >> .env
+            echo "UPSTASH_REDIS_REST_TOKEN=${{ secrets.BANK_APP_UPSTASH_REDIS_REST_TOKEN }}" >> .env
             echo "SECRET=${{ secrets.BANK_APP_SECRET }}" >> .env
           cd ../..
 
