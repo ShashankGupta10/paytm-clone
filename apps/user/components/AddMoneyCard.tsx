@@ -24,9 +24,6 @@ const SUPPORTED_BANKS = [
 export const AddMoney = () => {
   const [amount, setAmount] = useState<number>(0)
   const [provider, setProvider] = useState<string>('')
-  const [redirectUrl, setRedirectUrl] = useState(
-    SUPPORTED_BANKS[0]?.redirectUrl
-  )
   return (
     <Card title="Add Money">
       <div className="w-full">
@@ -41,9 +38,6 @@ export const AddMoney = () => {
         <Select
           onSelect={(value) => {
             setProvider(value)
-            setRedirectUrl(
-              SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ''
-            )
           }}
           options={SUPPORTED_BANKS.map((x) => ({
             key: x.name,

@@ -1,3 +1,6 @@
+'use client'
+import { Button } from '@repo/ui/button'
+
 export default function Home() {
-  return <p>hello</p>
+  return <Button onClick={() => console.log('Hello')}>Hello</Button>
 }

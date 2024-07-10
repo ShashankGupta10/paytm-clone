@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db/db'
 
 async function main() {
-  const alice = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { number: '9999999999' },
     update: {},
     create: {
@@ -15,11 +15,12 @@ async function main() {
           amount: 20000,
           token: '122',
           provider: 'HDFC Bank',
+          transactionType: 'Deposit',
         },
       },
     },
   })
-  const bob = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { number: '9999999998' },
     update: {},
     create: {
@@ -33,11 +34,11 @@ async function main() {
           amount: 2000,
           token: '123',
           provider: 'HDFC Bank',
+          transactionType: 'Deposit',
         },
       },
     },
   })
-  console.log({ alice, bob })
 }
 main()
   .then(async () => {
