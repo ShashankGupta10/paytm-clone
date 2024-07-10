@@ -18,14 +18,14 @@ const page = () => {
           <TextInput
             label={'Contact Number'}
             placeholder={'Contact'}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setContact(e)
             }}
           />
           <TextInput
             label={'Amount'}
             placeholder={'Amount'}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setAmount(Number(e))
             }}
           />

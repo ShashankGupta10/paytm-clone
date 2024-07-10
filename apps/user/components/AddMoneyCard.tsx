@@ -30,13 +30,13 @@ export const AddMoney = () => {
         <TextInput
           label={'Amount'}
           placeholder={'Amount'}
-          onChange={(e) => {
+          onChange={(e: any) => {
             setAmount(Number(e))
           }}
         />
         <div className="py-4 text-left">Bank</div>
         <Select
-          onSelect={(value) => {
+          onSelect={(value: any) => {
             setProvider(value)
           }}
           options={SUPPORTED_BANKS.map((x) => ({

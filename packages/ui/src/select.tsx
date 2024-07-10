@@ -3,7 +3,7 @@ export const Select = ({
   options,
   onSelect,
 }: {
-  onSelect: (value: string) => void
+  onSelect: Function
   options: {
     key: string
     value: string
