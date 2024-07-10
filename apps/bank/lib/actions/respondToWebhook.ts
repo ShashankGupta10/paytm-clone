@@ -1,6 +1,5 @@
 'use server'
 import axios from 'axios'
-import { redis } from '../redis'
 
 export const respondToWebhook = async (
   status: string,
