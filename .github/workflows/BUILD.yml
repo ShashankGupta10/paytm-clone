@@ -27,23 +27,20 @@ jobs:
 
       - name: Add env vars
         run: |
-          # Common environment variables for packages/db
           cd packages/db
-
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           cd ../..
 
-          # App-specific environment variables
-          if [ "${{ matrix.app }}" == "user" ]; then
-            echo "JWT_SECRET=${{ secrets.USER_APP_JWT_SECRET }}" >> $GITHUB_ENV
-            echo "NEXTAUTH_URL=${{ secrets.USER_APP_NEXTAUTH_URL }}" >> $GITHUB_ENV
-            echo "SECRET=${{ secrets.USER_APP_SECRET }}" >> $GITHUB_ENV
-
-          elif [ "${{ matrix.app }}" == "bank" ]; then
-            echo "UPSTASH_REDIS_REST_URL=${{ secrets.BANK_APP_UPSTASH_REDIS_REST_URL }}" >> $GITHUB_ENV
-            echo "UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" >> $GITHUB_ENV
-            echo "SECRET=${{ secrets.BANK_APP_SECRET }}" >> $GITHUB_ENV
-          fi
+          cd apps/user
+            echo "JWT_SECRET=${{ secrets.USER_APP_JWT_SECRET }}" >> .env
+            echo "NEXTAUTH_URL=${{ secrets.USER_APP_NEXTAUTH_URL }}" >> .env
+            echo "SECRET=${{ secrets.USER_APP_SECRET }}" >> .env
+          
+          cd ../bank
+            echo "UPSTASH_REDIS_REST_URL=${{ secrets.BANK_APP_UPSTASH_REDIS_REST_URL }}" >> .env
+            echo "UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" >> .env
+            echo "SECRET=${{ secrets.BANK_APP_SECRET }}" >> .env
+          cd ../..
 
       - name: Check Build
         run: npm run build
