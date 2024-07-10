@@ -2,7 +2,7 @@
   "name": "paytm",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo build --env-mode=loose",
     "dev": "turbo dev",
     "lint": "lint-staged",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
