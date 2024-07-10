@@ -28,15 +28,18 @@ jobs:
       - name: Add env vars
         run: |
           cd packages/db
+          npm install
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           cd ../..
 
           cd apps/user
+            npm install
             echo "JWT_SECRET=${{ secrets.USER_APP_JWT_SECRET }}" >> .env
             echo "NEXTAUTH_URL=${{ secrets.USER_APP_NEXTAUTH_URL }}" >> .env
             echo "SECRET=${{ secrets.USER_APP_SECRET }}" >> .env
           
           cd ../bank
+            npm install
             echo "UPSTASH_REDIS_REST_URL=${{ secrets.BANK_APP_UPSTASH_REDIS_REST_URL }}" >> .env
             echo "UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" >> .env
             echo "SECRET=${{ secrets.BANK_APP_SECRET }}" >> .env
