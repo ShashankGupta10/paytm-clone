@@ -8,7 +8,7 @@ import axios from 'axios'
 
 export const onRampTxn = async (amount: number, provider: string) => {
   const session = await getServerSession(authOptions)
-  const response = await axios.post('http://localhost:3005/api/initTxn', {
+  const response = await axios.post('http://localhost:3002/api/initTxn', {
     amount: amount,
     provider: provider,
     userId: session.user.id,
@@ -28,6 +28,7 @@ export const onRampTxn = async (amount: number, provider: string) => {
       provider,
       status: 'Processing',
       token: token,
+      transactionType: 'Deposit',
       startTime: new Date(),
       user: {
         connect: {

@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { redis } from '@/app/lib/redis'
+import { redis } from '@/lib/redis'
 import { NextRequest, NextResponse } from 'next/server'
 
 interface Body {
@@ -20,7 +20,7 @@ const handler = async (req: NextRequest) => {
   const token = randomUUID({
     disableEntropyCache: true,
   })
-  const url = `http://localhost:3005/${token}`
+  const url = `http://localhost:3002/${token}`
   await redis.set(token, JSON.stringify({ amount, provider, userId }), {
     ex: 300,
     nx: true,

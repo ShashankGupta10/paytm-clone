@@ -15,6 +15,10 @@ export const respondToWebhook = async (
     userId: userId,
     secret: process.env.SECRET,
   })
-  console.log(data.data)
-  await redis.set(token, null)
+  if (!data.data.success) {
+    console.log('Invalid fields')
+    return { success: false }
+  } else {
+    return { success: true }
+  }
 }
