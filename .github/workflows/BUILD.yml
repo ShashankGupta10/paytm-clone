@@ -28,8 +28,7 @@ jobs:
       - name: Add env vars
         run: |
           # Common environment variables for packages/db
-          echo "DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}" >> $GITHUB_ENV
-          echo "ANOTHER_DB_SECRET=${{ secrets.ANOTHER_DB_SECRET }}" >> $GITHUB_ENV
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
           # App-specific environment variables
           if [ "${{ matrix.app }}" == "user" ]; then
