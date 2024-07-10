@@ -20,15 +20,18 @@ jobs:
       - name: Setup Node 
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Specify your Node.js version
-      
+          node-version: '20'
+
       - name: Install dependencies
         run: npm install
 
       - name: Add env vars
         run: |
           # Common environment variables for packages/db
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          cd packages/db
+
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          cd ../..
 
           # App-specific environment variables
           if [ "${{ matrix.app }}" == "user" ]; then
