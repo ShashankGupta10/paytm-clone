@@ -9,15 +9,39 @@ jobs:
   build: 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        app: [user, bank]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Setup Node 
         uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Specify your Node.js version
       
       - name: Install dependencies
         run: npm install
+
+      - name: Add env vars
+        run: |
+          # Common environment variables for packages/db
+          echo "DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}" >> $GITHUB_ENV
+          echo "ANOTHER_DB_SECRET=${{ secrets.ANOTHER_DB_SECRET }}" >> $GITHUB_ENV
+
+          # App-specific environment variables
+          if [ "${{ matrix.app }}" == "user" ]; then
+            echo "JWT_SECRET=${{ secrets.USER_APP_JWT_SECRET }}" >> $GITHUB_ENV
+            echo "NEXTAUTH_URL=${{ secrets.USER_APP_NEXTAUTH_URL }}" >> $GITHUB_ENV
+            echo "SECRET=${{ secrets.USER_APP_SECRET }}" >> $GITHUB_ENV
+
+          elif [ "${{ matrix.app }}" == "bank" ]; then
+            echo "UPSTASH_REDIS_REST_URL=${{ secrets.BANK_APP_UPSTASH_REDIS_REST_URL }}" >> $GITHUB_ENV
+            echo "UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" >> $GITHUB_ENV
+            echo "SECRET=${{ secrets.BANK_APP_SECRET }}" >> $GITHUB_ENV
+          fi
 
       - name: Check Build
         run: npm run build
